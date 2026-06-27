@@ -1,0 +1,31 @@
+services:
+
+  model-v1:
+    build:
+      context: .
+      dockerfile: model-v1/Dockerfile
+    container_name: model-v1
+    ports:
+      - "8001:8001"
+
+  model-v2:
+    build:
+      context: .
+      dockerfile: model-v2/Dockerfile
+    container_name: model-v2
+    ports:
+      - "8002:8002"
+
+  router:
+    build:
+      context: .
+      dockerfile: router/Dockerfile
+    container_name: router
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_V1_URL=http://model-v1:8001
+      - MODEL_V2_URL=http://model-v2:8002
+    depends_on:
+      - model-v1
+      - model-v2
