@@ -19,6 +19,41 @@ This approach allows new models to be evaluated on real production traffic witho
 
 ---
 
+## 🏗️ Architecture
+
+```mermaid
+flowchart TD
+
+    U[User]
+
+    F[React Frontend<br/>Vite]
+
+    R[FastAPI Shadow Router]
+
+    V1[Model V1<br/>Logistic Regression]
+
+    V2[Model V2<br/>Random Forest]
+
+    D[Comparison Engine]
+
+    K[Kubernetes Cluster]
+
+    U --> F
+    F --> R
+
+    R --> V1
+    R --> V2
+
+    V1 --> D
+    V2 --> D
+
+    D --> F
+
+    K --> R
+    K --> V1
+    K --> V2
+```
+
 ## ✨ Features
 
 * Dual Machine Learning Models
