@@ -1,17 +1,21 @@
-FROM node:22
+FROM node:22 AS builder
 
 WORKDIR /app
 
 COPY frontend/package*.json ./
-
-RUN npm config set registry https://registry.npmjs.org/ && \
-    npm config set fetch-retries 5 && \
-    npm config set fetch-retry-mintimeout 2000 && \
-    npm config set fetch-retry-maxtimeout 120000 && \
-    npm install --prefer-offline --no-audit --no-fund
+RUN npm install
 
 COPY frontend/ .
+RUN npm run build
 
-EXPOSE 5173
+FROM node:22
 
-CMD ["npm","run","preview","--","--host","0.0.0.0","--port","10000"]
+WORKDIR /app
+
+RUN npm install -g serve
+
+COPY --from=builder /app/dist ./dist
+
+EXPOSE 10000
+
+CMD ["serve", "-s", "dist", "-l", "10000"]
