@@ -1,159 +1,174 @@
-# 🚀 ShadowDeploy
-
-> A production-inspired Machine Learning Shadow Deployment Platform built using **React, FastAPI, Docker, Docker Hub, and Kubernetes**.
-
----
-
-## 📌 Overview
-
-ShadowDeploy demonstrates how organizations can safely validate a new Machine Learning model in production without exposing it directly to users.
-
-For every incoming prediction request:
-
-* Model V1 (Production Model) generates the response shown to the user.
-* Model V2 (Shadow Model) processes the same request in the background.
-* The router compares both predictions.
-* Differences are tracked for monitoring and future deployment decisions.
-
-This approach allows new models to be evaluated on real production traffic without affecting users.
-
----
-
-## 🏗️ Architecture
+<h1 align="center">🚀 ShadowDeploy</h1>
 
 <p align="center">
-  <img src="assets/architecture.png" alt="ShadowDeploy Architecture" width="100%">
+Production-Style Machine Learning Shadow Deployment Platform
 </p>
 
 
+
+<p align="center">
+
+<img src="https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python"/>
+<img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white"/>
+<img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black"/>
+<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"/>
+<img src="https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white"/>
+<img src="https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white"/>
+<img src="https://img.shields.io/badge/Render-46E3B7?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge"/>
+
+</p>
+
+ShadowDeploy is a cloud-native machine learning deployment platform that safely evaluates candidate ML models in production using **Shadow Deployment**.
+
+Every incoming request is processed by both the production model and the candidate model simultaneously. The production model serves the user while the candidate model runs silently in the background. Their predictions are compared in real time, allowing safe model validation before deployment.
+
+---
+
+## 🌐 Live Demo
+
+* **🚀 Frontend:** https://shadowdeploy-frontend.onrender.com
+* **📘 API Documentation:** https://shadowdeploy-router.onrender.com/docs
+
+
+---
+## 💡 Why Shadow Deployment?
+
+Traditional model deployment replaces the production model immediately, introducing the risk of unexpected failures. Shadow Deployment eliminates this risk by executing a candidate model alongside the production model on the same requests while only exposing the production model's predictions to end users.
+
+ShadowDeploy demonstrates this industry-adopted deployment strategy by safely evaluating model performance through real-time prediction comparison, disagreement monitoring, and production-style traffic routing.
+---
 ## ✨ Features
 
-* Dual Machine Learning Models
-* Shadow Deployment Architecture
-* FastAPI Microservices
-* React Dashboard
+* Production-style Shadow Deployment
+* Dual ML Models (Production + Candidate)
+* Real-time Prediction Comparison
+* Live Disagreement Rate Monitoring
+* Interactive React Dashboard
+* FastAPI Microservices Architecture
 * Dockerized Services
-* Docker Compose Support
-* Kubernetes Deployments
-* Kubernetes Services
+* Kubernetes Deployments & Services
 * Horizontal Scaling
 * Rolling Updates
-* Docker Hub Image Registry
-* REST API Endpoints
+* Cloud Deployment on Render
 
 ---
 
 ## 🛠 Tech Stack
 
-### Frontend
+| Category         | Technologies                                     |
+| ---------------- | ------------------------------------------------ |
+| Frontend         | React, Tailwind CSS, Axios, Recharts             |
+| Backend          | FastAPI, Python                                  |
+| Machine Learning | Scikit-learn, Logistic Regression, Random Forest |
+| DevOps           | Docker, Kubernetes, Docker Hub                   |
+| Cloud            | Render                                           |
+| Version Control  | Git, GitHub                                      |
 
-* React
-* Vite
-* CSS
+---
 
-### Backend
+## 🏗 System Architecture
 
-* FastAPI
-* Python
-
-### Machine Learning
-
-* Scikit-learn
-* Logistic Regression
-* Random Forest
-
-### DevOps
-
-* Docker
-* Docker Compose
-* Docker Hub
-* Kubernetes
+<p align="center">
+<img src="assets/architecture.png" width="900"/>
+</p>
 
 ---
 
 ## 📂 Project Structure
 
-```
+```text
 ShadowDeploy
 │
+├── assets/
 ├── frontend/
+├── router/
 ├── model-v1/
 ├── model-v2/
-├── router/
 ├── k8s/
+├── wheels/
 ├── docker-compose.yml
 └── README.md
 ```
 
 ---
 
-## 🐳 Docker
+## ⚙️ How It Works
 
-Each microservice is containerized using Docker.
-
-Containers:
-
-* Frontend
-* Router
-* Model V1
-* Model V2
-
-Docker Compose is used for local orchestration.
+1. User submits transaction details from the React dashboard.
+2. The FastAPI Router receives the request.
+3. The Router sends the same request to both ML models.
+4. The Production Model response is returned to the user.
+5. The Candidate Model prediction is stored for comparison.
+6. ShadowDeploy measures disagreement rate and updates live statistics.
+7. The dashboard visualizes request count, disagreement rate, and model health in real time.
 
 ---
 
-## ☸ Kubernetes
+## ☁️ Deployment
 
-The project is deployed using Kubernetes with:
+All services are independently containerized and deployed.
 
-* Deployments
-* Services
-* Replica Scaling
-* Rolling Updates
-
-Current Deployment:
-
-* Model V1 → 3 Replicas
-* Model V2 → 1 Replica
-* Router → 1 Replica
+* React Frontend → Render
+* FastAPI Router → Render
+* Production ML Model → Render
+* Candidate ML Model → Render
+* Docker Images → Docker Hub
+* Kubernetes Deployments → Local Cluster
 
 ---
+## 📈 Deployment Architecture
 
-## 📈 Scaling
-
-Model V1 can be scaled horizontally using:
-
-```bash
-kubectl scale deployment model-v1 --replicas=3
+```text
+                User
+                  │
+                  ▼
+      React Frontend (Render)
+                  │
+                  ▼
+      FastAPI Shadow Router
+          │               │
+          ▼               ▼
+ Production Model     Shadow Model
+(Logistic Regression) (Random Forest)
+          │               │
+          └──── Comparison ────┘
+                  │
+                  ▼
+        Live Dashboard & Statistics
 ```
+## 📸 Dashboard 
 
+<p align="center">
+  <img src="assets/dashboard.png" alt="ShadowDeploy Dashboard" width="1000"/>
+</p>
+
+The dashboard provides real-time prediction results, model comparison, disagreement monitoring, and system health, allowing users to visualize how the production and shadow models behave under identical requests.
 ---
-
-## 🔄 Rolling Update
-
-Rolling updates are supported using:
-
-```bash
-kubectl rollout restart deployment model-v1
-```
-
-This updates pods gradually without downtime.
-
----
-
 ## 🚀 Future Improvements
 
-* Prometheus Monitoring
-* Grafana Dashboard
-* CI/CD using GitHub Actions
-* Helm Charts
-* Istio Service Mesh
-* AWS EKS Deployment
+* Authentication & API Keys
+* Prometheus + Grafana Monitoring
+* Horizontal Pod Autoscaler (HPA)
+* CI/CD with GitHub Actions
+* Persistent Database for Analytics
+* Canary Deployment Support
+* Model Version Management
 
 ---
+## 🎓 Key Learnings
 
-## 👨‍💻 Author
+Building ShadowDeploy provided hands-on experience with production-oriented machine learning deployment concepts, including:
 
-**Rohan Beniel E**
+* Designing microservice-based ML systems
+* Implementing Shadow Deployment strategies
+* Containerizing applications using Docker
+* Orchestrating services with Kubernetes
+* Deploying distributed services to the cloud using Render
+* Building REST APIs with FastAPI
+* Developing interactive dashboards using React
+* Managing end-to-end application deployment with Git and GitHub
+---
+## 📜 License
 
-College of Engineering, Guindy (CEG)
+This project is licensed under the MIT License.
