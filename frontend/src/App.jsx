@@ -15,7 +15,7 @@ const [features, setFeatures] = useState(["", "", "", "", ""]);
 const [latestResult, setLatestResult] = useState(null);
   const fetchStats = async () => {
     try {
-      const res = await axios.get("http://127.0.0.1:8000/stats");
+      const res = await axios.get("https://shadowdeploy-router.onrender.com/stats");
       setStats(res.data);
     } catch (err) {
       console.log(err);
@@ -35,7 +35,7 @@ const runPrediction = async () => {
     };
 
     const res = await axios.post(
-      "http://127.0.0.1:8000/shadow-predict",
+      "https://shadowdeploy-router.onrender.com/shadow-predict",
       payload
     );
 
