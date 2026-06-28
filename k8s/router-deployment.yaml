@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: router
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: router
+
+  template:
+    metadata:
+      labels:
+        app: router
+
+    spec:
+      containers:
+      - name: router
+        image: rohanbeniel/shadowdeploy-router:latest
+        imagePullPolicy: Always
+
+        ports:
+        - containerPort: 8000
+
+        env:
+        - name: MODEL_V1_URL
+          value: "http://model-v1-service:8001"
+
+        - name: MODEL_V2_URL
+          value: "http://model-v2-service:8002"

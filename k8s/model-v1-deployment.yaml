@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: model-v1
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: model-v1
+
+  template:
+    metadata:
+      labels:
+        app: model-v1
+
+    spec:
+      containers:
+      - name: model-v1
+        image: rohanbeniel/shadowdeploy-model-v1:latest
+        imagePullPolicy: Always
+
+        ports:
+        - containerPort: 8001

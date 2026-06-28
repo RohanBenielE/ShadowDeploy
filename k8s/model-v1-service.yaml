@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: model-v1-service
+
+spec:
+  selector:
+    app: model-v1
+
+  ports:
+  - port: 8001
+    targetPort: 8001
+
+  type: ClusterIP
